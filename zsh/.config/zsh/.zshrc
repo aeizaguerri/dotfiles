@@ -53,7 +53,8 @@ eval "$(fzf --zsh)"
 
 # Alises
 alias sync-gdrive="~/.local/bin/gdrive_sync.sh"
-alias ls='ls --color'
+alias ls='ls -la --color'
+alias claude='claude --allow-dangerously-skip-permissions'
 
 # Commands
 # === Update Zinit & Plugins Function ===

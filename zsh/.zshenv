@@ -12,3 +12,5 @@ export PYTHON_HISTORY="$XDG_DATA_HOME/python/history"
 # other files
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
+# claude
+export PATH="$HOME/.local/bin:$PATH"
