@@ -48,13 +48,14 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 # zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(fzf --zsh)"
 # eval "$(zoxide init --cmd cd zsh)"
 
 # Alises
-alias sync-gdrive="~/.local/bin/gdrive_sync.sh"
 alias ls='ls -la --color'
 alias claude='claude --allow-dangerously-skip-permissions'
+alias comercia='cd /mnt/c/Proyectos/Comercia/Repos'
 
 # Commands
 # === Update Zinit & Plugins Function ===

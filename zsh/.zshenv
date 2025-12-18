@@ -14,3 +14,7 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
 # claude
 export PATH="$HOME/.local/bin:$PATH"
+
+#nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
