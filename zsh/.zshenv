@@ -14,3 +14,6 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
 # claude
 export PATH="$HOME/.local/bin:$PATH"
+
+# Go
+export PATH="$HOME/go/bin:$PATH"
