@@ -1,3 +1,6 @@
+# Homebrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+
 # Clone Zinit (plugin manager)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -63,3 +66,5 @@ zsh-update() {
   zinit self-update && zinit update --all
   echo "✅ All Zinit plugins updated!"
 }
+
+. "$HOME/.local/share/../bin/env"
