@@ -1,5 +1,6 @@
 # Homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+eval "$(zoxide init zsh)"
 
 # Clone Zinit (plugin manager)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
