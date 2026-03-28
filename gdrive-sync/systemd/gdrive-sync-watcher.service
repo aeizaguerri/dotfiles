@@ -1,0 +1,34 @@
+# ============================================================================
+# gdrive-sync-watcher.service — Filesystem watcher for live sync
+# ============================================================================
+# Long-running service that watches ~/GoogleDrive-local for changes
+# using inotifywait, then triggers bisync after a debounce period.
+#
+# Install: ~/.config/systemd/user/gdrive-sync-watcher.service
+# Enable:  systemctl --user enable gdrive-sync-watcher.service
+# ============================================================================
+[Unit]
+Description=Google Drive filesystem watcher (inotifywait + bisync)
+# Wants= ensures boot service is pulled in when watcher is started directly;
+# After= ensures ordering — watcher starts only after boot sync completes.
+Wants=gdrive-sync-boot.service
+After=gdrive-sync-boot.service
+# Cap restart storms: max 5 restarts in 5 minutes, then require manual restart
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/gdrive-watcher.sh
+Restart=on-failure
+RestartSec=30
+
+# Environment overrides (uncomment to customize)
+# Environment=GDRIVE_DEBOUNCE_SEC=30
+# Environment=GDRIVE_LOCAL=%h/GoogleDrive-local
+
+# Minimal hardening for a personal user service
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

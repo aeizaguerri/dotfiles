@@ -1,0 +1,32 @@
+# ============================================================================
+# gdrive-sync-boot.service — One-shot bisync on login
+# ============================================================================
+# Runs a full bisync when the user logs in, pulling any remote changes
+# made while the PC was off (edits from phone, web, other devices).
+#
+# Install: ~/.config/systemd/user/gdrive-sync-boot.service
+# Enable:  systemctl --user enable gdrive-sync-boot.service
+# ============================================================================
+[Unit]
+Description=Google Drive bisync on login
+# Start watcher AFTER this completes
+Before=gdrive-sync-watcher.service
+
+[Service]
+Type=oneshot
+# Wait for Google Drive to be reachable before syncing (max ~5 min)
+# Wait for Google API connectivity (max ~2.5 min, leaving budget for sync)
+# Note: drop -f flag — googleapis.com root returns 404 which -f treats as failure
+ExecStartPre=/usr/bin/bash -c 'c=0; until curl -s --max-time 5 -o /dev/null -w "" https://www.googleapis.com 2>/dev/null; do c=$((c+1)); [ $c -ge 30 ] && echo "Network unreachable after 30 attempts" && exit 1; sleep 5; done'
+ExecStart=%h/.local/bin/gdrive-sync.sh
+# ExecStartPre can take up to ~300s (connectivity check); ExecStart needs its
+# own time on top of that — set 600s total so both phases fit comfortably.
+TimeoutStartSec=600
+# Keep the service "active" so the watcher's After= ordering is maintained
+RemainAfterExit=yes
+
+# Minimal hardening for a personal user service
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
