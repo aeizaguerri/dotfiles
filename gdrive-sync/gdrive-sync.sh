@@ -145,6 +145,9 @@ rclone bisync "$REMOTE" "$LOCAL_DIR" \
     --verbose \
     --check-access \
     --max-delete 50 \
+    --conflict-resolve newer \
+    --conflict-loser rename \
+    --conflict-suffix .gdrive-conflict \
     "${RCLONE_ARGS[@]}" \
     > "$RCLONE_OUTPUT_TMP" 2>&1 || EXIT_CODE=$?
 

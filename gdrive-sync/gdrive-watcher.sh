@@ -29,6 +29,10 @@ SYNC_SCRIPT="${GDRIVE_SYNC_SCRIPT:-$HOME/.local/bin/gdrive-sync.sh}"
 LOG_DIR="${GDRIVE_LOG_DIR:-$HOME/.local/share/gdrive-sync/logs}"
 LOG_FILE="${LOG_DIR}/gdrive-watcher.log"
 MAX_LOG_LINES="${GDRIVE_MAX_LOG_LINES:-1000}"
+# Maximum time (in minutes) to keep deferring a sync while edits keep coming.
+# After this ceiling, the sync is forced even if the file is still being edited.
+# Increase this if you regularly edit notes for longer than the default.
+MAX_DEBOUNCE_MIN="${GDRIVE_MAX_DEBOUNCE_MIN:-60}"
 
 # --- Helpers ----------------------------------------------------------------
 # LOG_DIR must exist before any log() call, including the DEBOUNCE guard below
@@ -83,7 +87,7 @@ log "INFO" "Watcher started — monitoring: $LOCAL_DIR (debounce: ${DEBOUNCE_SEC
 # a sync triggering another sync (sync-triggering-sync loop).
 EXCLUDE_PATTERN='(\.partial~$|\.swp$|\.swx$|~$|\.tmp$|\.crdownload$|\/4913$|\.rclonepart$)'
 
-MAX_DEBOUNCE_CYCLES=$(( 300 / DEBOUNCE_SEC > 0 ? 300 / DEBOUNCE_SEC : 1 ))
+MAX_DEBOUNCE_CYCLES=$(( MAX_DEBOUNCE_MIN * 60 / DEBOUNCE_SEC > 0 ? MAX_DEBOUNCE_MIN * 60 / DEBOUNCE_SEC : 1 ))
 
 while true; do
     # Wait for filesystem events (blocks until something happens)
