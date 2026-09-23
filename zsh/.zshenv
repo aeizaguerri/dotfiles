@@ -12,6 +12,9 @@ export PYTHON_HISTORY="$XDG_DATA_HOME/python/history"
 # other files
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
+# User npm global packages
+export PATH="$HOME/.npm-global/bin:$PATH"
+
 # claude
 export PATH="$HOME/.local/bin:$PATH"
 

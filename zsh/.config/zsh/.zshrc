@@ -58,6 +58,7 @@ eval "$(fzf --zsh)"
 # Alises
 alias sync-gdrive="~/.local/bin/gdrive_sync.sh"
 alias ls='ls -la --color'
+alias lg='lazygit'
 alias claude='claude --allow-dangerously-skip-permissions'
 
 # Commands
